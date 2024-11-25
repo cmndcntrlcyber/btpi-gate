@@ -1,12 +1,12 @@
 #-------------------------------
 # Install Safeline WAF
 cd /opt
-mkdir -p "/data/safeline"
-cd "/data/safeline"
-curl "https://waf.chaitin.com/release/latest/compose.yaml"
-cd "/data/safeline"
+mkdir -p "/opt/safeline"
+cd "/opt/safeline"
+curl "https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/safeline/compose.yaml" > "/opt/safeline/compose.yaml"
+cd "/opt/safeline"
 touch ".env"
-echo "SAFELINE_DIR=/data/safeline" >> ".env"
+echo "SAFELINE_DIR=/opt/safeline" >> ".env"
 echo "IMAGE_TAG=latest" >> ".env"
 echo "MGT_PORT=10443" >> ".env"
 echo "POSTGRES_PASSWORD= `BTPI-N3xu5-P@55`" >> ".env"

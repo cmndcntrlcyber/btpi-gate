@@ -103,6 +103,14 @@ RUN bash /opt/btpi-nexus/install_wazuh.sh
 
 #-------------------------------
 # Install Safeline WAF
+
+WORKDIR "/opt"
+RUN apk add bash tar curl
+
+## Automated Install
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/safeline/install_safeline.sh > /opt/btpi-nexus/install_safeline.sh
+RUN bash /opt/btpi-nexus/install_safeline.sh
+
 #WORKDIR "/opt"
 #RUN mkdir -p "/data/safeline"
 #RUN cd "/data/safeline"

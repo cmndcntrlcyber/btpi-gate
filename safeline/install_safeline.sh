@@ -3,7 +3,7 @@
 cd /opt
 mkdir -p "/data/safeline"
 cd "/data/safeline"
-wget "https://waf.chaitin.com/release/latest/compose.yaml"
+curl "https://waf.chaitin.com/release/latest/compose.yaml"
 cd "/data/safeline"
 touch ".env"
 echo "SAFELINE_DIR=/data/safeline" >> ".env"

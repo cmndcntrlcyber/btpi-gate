@@ -88,12 +88,12 @@ RUN bash /opt/btpi-nexus/install_grr.sh
 
 #---------------------------------
 # Install Wazuh 
-WORKDIR "/opt"
-RUN apk add bash tar curl
+#WORKDIR "/opt"
+#RUN apk add bash tar curl
 
 ## Automated Install
-RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/wazuh/install_wazuh.sh > /opt/btpi-nexus/install_wazuh.sh
-RUN bash /opt/btpi-nexus/install_wazuh.sh
+#RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/wazuh/install_wazuh.sh > /opt/btpi-nexus/install_wazuh.sh
+#RUN bash /opt/btpi-nexus/install_wazuh.sh
 
 ## Manual Install
 #RUN git clone https://github.com/wazuh/wazuh-docker.git -b v4.9.2
@@ -111,6 +111,7 @@ RUN apk add bash tar curl
 RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/safeline/install_safeline.sh > /opt/btpi-nexus/install_safeline.sh
 RUN bash /opt/btpi-nexus/install_safeline.sh
 
+## Manual Install
 #WORKDIR "/opt"
 #RUN mkdir -p "/data/safeline"
 #RUN cd "/data/safeline"

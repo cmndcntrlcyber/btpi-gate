@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/img/bt-pi-nobg.png" width="400" /> <img src="/img/BTPI-GATE.png" width="400" />
+  <img src="/img/bt-pi-nobg.png" width="500" /> <img src="/img/BTPI-GATE.png" width="200" />
 </p>
 
 <h4 align="center">

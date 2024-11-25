@@ -1,6 +1,6 @@
 FROM docker:dind
 
-EXPOSE 22 443 3000 6901 8000 8500 9443
+EXPOSE 22 443 3000 3128 3306 8000 8500 9443 10443
 
 VOLUME ["/var/run", "/var/lib/docker/volumes", "/portainer_data"]
 

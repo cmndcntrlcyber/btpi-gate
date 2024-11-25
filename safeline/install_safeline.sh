@@ -9,10 +9,11 @@ touch ".env"
 echo "SAFELINE_DIR=/opt/safeline" >> ".env"
 echo "IMAGE_TAG=latest" >> ".env"
 echo "MGT_PORT=10443" >> ".env"
-echo "POSTGRES_PASSWORD=`BTPI-N3xu5-P@55`" >> ".env"
-echo "SUBNET_PREFIX=172.18.0" >> ".env"
+echo "POSTGRES_PASSWORD=BTPI-N3xu5-P@55" >> ".env"
+echo "SUBNET_PREFIX=172.22.0" >> ".env"
 echo "IMAGE_PREFIX=chaitin" >> ".env"
-echo "RELEASE=lts" >> ".env"
+echo "RELEASE=" >> ".env"
 docker compose up -d
-docker exec safeline-mgt resetadmin
+sleep 30
+docker exec safeline-mgt resetadmin > admin_pass.txt 
 #--------------------------------

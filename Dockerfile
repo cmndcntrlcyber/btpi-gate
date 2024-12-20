@@ -12,7 +12,7 @@ RUN apk add nano
 RUN apk add curl
 RUN apk add wget
 RUN apk add sudo
-RUN mkdir /opt/btpi-nexus/
+RUN mkdir /opt/btpi-gate/
 #-------------------------------
 #Configure kubectl, helm and k3d
 #RUN curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash; exit 0
@@ -42,8 +42,8 @@ WORKDIR /tmp
 RUN apk add bash tar curl
 
 ## Automated Install
-RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/kasm/install_kasm.sh > /opt/btpi-nexus/install_kasm.sh
-RUN bash /opt/btpi-nexus/install_kasm.sh
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/kasm/install_kasm.sh > /opt/btpi-gate/install_kasm.sh
+RUN bash /opt/btpi-gate/install_kasm.sh
 
 ## Manual Install
 # Download required files
@@ -78,8 +78,8 @@ WORKDIR /tmp
 RUN apk add bash tar curl
 
 ## Automated Install
-RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/kasm/install_squid.sh > /opt/btpi-nexus/install_squid.sh
-RUN bash /opt/btpi-nexus/install-squid.sh
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/kasm/install_squid.sh > /opt/btpi-gate/install_squid.sh
+RUN bash /opt/btpi-gate/install-squid.sh
 #--------------------------------
 
 #---------------------------------
@@ -88,8 +88,8 @@ WORKDIR "/opt"
 RUN apk add bash tar curl
 
 ## Automated Install
-RUN curl https://github.com/cmndcntrlcyber/btpi-nexus/grr/install_grr.sh > /opt/btpi-nexus/install_grr.sh
-RUN bash /opt/btpi-nexus/install_grr.sh
+RUN curl https://github.com/cmndcntrlcyber/btpi-gate/grr/install_grr.sh > /opt/btpi-gate/install_grr.sh
+RUN bash /opt/btpi-gate/install_grr.sh
 
 ## Manual Install
 #RUN git clone https://github.com/google/grr
@@ -105,8 +105,8 @@ RUN bash /opt/btpi-nexus/install_grr.sh
 #RUN apk add bash tar curl
 
 ## Automated Install
-#RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/wazuh/install_wazuh.sh > /opt/btpi-nexus/install_wazuh.sh
-#RUN bash /opt/btpi-nexus/install_wazuh.sh
+#RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/wazuh/install_wazuh.sh > /opt/btpi-gate/install_wazuh.sh
+#RUN bash /opt/btpi-gate/install_wazuh.sh
 
 ## Manual Install
 #RUN git clone https://github.com/wazuh/wazuh-docker.git -b v4.9.2
@@ -121,8 +121,8 @@ WORKDIR "/opt"
 RUN apk add bash tar curl
 
 ## Automated Install
-RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/safeline/install_safeline.sh > /opt/btpi-nexus/install_safeline.sh
-RUN bash /opt/btpi-nexus/install_safeline.sh
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/safeline/install_safeline.sh > /opt/btpi-gate/install_safeline.sh
+RUN bash /opt/btpi-gate/install_safeline.sh
 
 ## Manual Install
 #WORKDIR "/opt"

@@ -32,7 +32,7 @@ RUN apk add bash tar curl
 RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh > /opt/btpi-gate/portainer/install_portainer.sh
 RUN sudo bash /opt/btpi-gate/portainer/install_portainer.sh
 #-------------------------------
-    
+
 #RUN docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.21.0
 
 #-------------------------------
@@ -72,7 +72,7 @@ RUN bash /opt/btpi-gate/install_kasm.sh
 #---------------------------------
 
 #-------------------------------
-## Install Kasm
+## Install Squid
 # Set up environment for Kasm installation
 WORKDIR /tmp
 # Add necessary tools

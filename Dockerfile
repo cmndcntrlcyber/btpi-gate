@@ -70,6 +70,18 @@ RUN bash /opt/btpi-nexus/install_kasm.sh
 #RUN echo $ACCEPT_EULA | bash -x ./kasm_release/install.sh --offline-workspaces /tmp/kasm_release_workspace_images_amd64_1.15.0.06fdc8.tar.gz --offline-service /tmp/kasm_release_service_images_amd64_1.15.0.06fdc8.tar.gz
 #---------------------------------
 
+#-------------------------------
+## Install Kasm
+# Set up environment for Kasm installation
+WORKDIR /tmp
+# Add necessary tools
+RUN apk add bash tar curl
+
+## Automated Install
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/kasm/install_squid.sh > /opt/btpi-nexus/install_squid.sh
+RUN bash /opt/btpi-nexus/install-squid.sh
+#--------------------------------
+
 #---------------------------------
 # Install Google Rapid Response
 WORKDIR "/opt"

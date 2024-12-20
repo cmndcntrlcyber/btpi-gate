@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ## Install Kasm
 # Set up environment for Kasm installation
 cd /tmp

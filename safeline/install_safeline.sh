@@ -15,5 +15,6 @@ echo "IMAGE_PREFIX=chaitin" >> ".env"
 echo "RELEASE=" >> ".env"
 docker compose up -d
 sleep 30
-docker exec safeline-mgt resetadmin > admin_pass.txt 
+touch admin_pass.txt
+docker exec safeline-mgt resetadmin >> admin_pass.txt 
 #--------------------------------

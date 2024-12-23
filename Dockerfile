@@ -1,4 +1,13 @@
-FROM docker:dind
+FROM kasmweb/core-ubuntu-focal:1.16.1
+USER root
+
+ENV HOME /home/kasm-default-profile
+ENV STARTUPDIR /dockerstartup
+ENV INST_SCRIPTS $STARTUPDIR/install
+WORKDIR $HOME
+
+######### Customize Container Here ###########
+
 
 EXPOSE 22 443 3000 3128 3306 8000 8500 9443 10443
 
@@ -12,27 +21,17 @@ RUN apk add nano
 RUN apk add curl
 RUN apk add wget
 RUN apk add sudo
-RUN mkdir /opt/btpi-nexus/
-#-------------------------------
-#Configure kubectl, helm and k3d
-#RUN curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash; exit 0
-#RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl; exit 0
-#RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl" && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl; exit 0
-#RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && helm repo add stable https://charts.helm.sh/stable && helm repo add gitlab https://charts.gitlab.io/; exit 0
-#RUN wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list && apk update && apk add terraform; exit 0
-#WORKDIR "/usr/local"
-#RUN curl -L https://dl.dagger.io/dagger/install.sh | sh
-#WORKDIR "/opt"
-#-------------------------------
+RUN mkdir /opt/btpi-gate/
+RUN echo = "127.0.0.1   {$PREFIX}-gate {$PREFIX}-gate-mgmt {$PREFIX}-gate-waf {$PREFIX}-gate-grr-g"
 
 #-------------------------------
-# Install portainer
-WORKDIR "/opt"
+## Install portainer
+RUN mkdir portainer
+WORKDIR "/opt/portainer/"
 RUN apk add bash tar curl
-RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh > /opt/btpi-gate/portainer/install_portainer.sh
+RUN sudo curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh | sudo bash -
 RUN sudo bash /opt/btpi-gate/portainer/install_portainer.sh
-
-#RUN docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.21.0
+#-------------------------------
 
 #-------------------------------
 ## Install Kasm
@@ -42,33 +41,8 @@ WORKDIR /tmp
 RUN apk add bash tar curl
 
 ## Automated Install
-RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/kasm/install_kasm.sh > /opt/btpi-nexus/install_kasm.sh
-RUN bash /opt/btpi-nexus/install_kasm.sh
-
-## Manual Install
-# Download required files
-#RUN curl -fLO https://kasm-static-content.s3.amazonaws.com/kasm_release_1.15.0.06fdc8.tar.gz
-#RUN curl -fLO https://kasm-static-content.s3.amazonaws.com/kasm_release_workspace_images_amd64_1.15.0.06fdc8.tar.gz
-#RUN curl -fLO https://kasm-static-content.s3.amazonaws.com/kasm_release_service_images_amd64_1.15.0.06fdc8.tar.gz
-
-# Verify downloads
-#RUN sha256sum /tmp/*.tar.gz
-
-# Extract release tarball
-#RUN tar -xf kasm_release_1.15.0.06fdc8.tar.gz
-
-# Debugging: Check the directory structure
-#RUN ls -la ./kasm_release/
-
-# Ensure the installer script is executable
-#RUN chmod +x ./kasm_release/install.sh
-
-# Set the environment variable to accept the EULA
-#ENV ACCEPT_EULA=y
-
-# Run the installation script with the necessary parameters
-#RUN echo $ACCEPT_EULA | bash -x ./kasm_release/install.sh --offline-workspaces /tmp/kasm_release_workspace_images_amd64_1.15.0.06fdc8.tar.gz --offline-service /tmp/kasm_release_service_images_amd64_1.15.0.06fdc8.tar.gz
-#---------------------------------
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/kasm/install_kasm.sh > /opt/btpi-gate/install_kasm.sh
+RUN bash /opt/btpi-gate/install_kasm.sh
 
 #---------------------------------
 # Install Google Rapid Response
@@ -78,29 +52,7 @@ RUN apk add bash tar curl
 ## Automated Install
 RUN curl https://github.com/cmndcntrlcyber/btpi-nexus/grr/install_grr.sh > /opt/btpi-nexus/install_grr.sh
 RUN bash /opt/btpi-nexus/install_grr.sh
-
-## Manual Install
-#RUN git clone https://github.com/google/grr
-#RUN cd grr*
-#RUN ./docker_config_files/init_certs.sh
-#RUN sed -i 's/ports:\s*-\s*"8000:8000"/ports:\n  - "8500:8000"/; s/expose:\s*-\s*"8000"/expose:\n  - "8500"/' compose.yaml
-#RUN docker compose up -d
-#-------------------------------
-
 #---------------------------------
-# Install Wazuh 
-#WORKDIR "/opt"
-#RUN apk add bash tar curl
-
-## Automated Install
-#RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-react/refs/heads/main/wazuh/install_wazuh.sh > /opt/btpi-nexus/install_wazuh.sh
-#RUN bash /opt/btpi-nexus/install_wazuh.sh
-
-## Manual Install
-#RUN git clone https://github.com/wazuh/wazuh-docker.git -b v4.9.2
-#RUN docker-compose -f generate-indexer-certs.yml run --rm generator
-#RUN docker compose up -d
-#-------------------------------
 
 #-------------------------------
 # Install Safeline WAF
@@ -109,24 +61,17 @@ WORKDIR "/opt"
 RUN apk add bash tar curl
 
 ## Automated Install
-RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/safeline/install_safeline.sh > /opt/btpi-nexus/install_safeline.sh
-RUN bash /opt/btpi-nexus/install_safeline.sh
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/safeline/install_safeline.sh > /opt/btpi-gate/install_safeline.sh
+RUN bash /opt/btpi-gate/install_safeline.sh
+#-------------------------------
 
-## Manual Install
-#WORKDIR "/opt"
-#RUN mkdir -p "/data/safeline"
-#RUN cd "/data/safeline"
-#RUN wget "https://waf.chaitin.com/release/latest/compose.yaml"
-#RUN cd "/data/safeline"
-#RUN touch ".env"
-#RUN echo "SAFELINE_DIR=/data/safeline" >> ".env"
-#RUN echo "SAFELINE_DIR=/data/safeline" >> ".env"
-#RUN echo "IMAGE_TAG=latest" >> ".env"
-#RUN echo "MGT_PORT=10443" >> ".env"
-#RUN echo "POSTGRES_PASSWORD= `BTPI-N3xu5-P@55`" >> ".env"
-#RUN echo "SUBNET_PREFIX=172.17.0" >> ".env"
-#RUN echo "IMAGE_PREFIX=chaitin" >> ".env"
-#RUN echo "RELEASE=lts" >> ".env"
-#RUN docker compose up -d
-#RUN docker exec safeline-mgt resetadmin
-#--------------------------------
+######### End Customizations ###########
+
+RUN chown 1000:0 $HOME
+RUN $STARTUPDIR/set_user_permission.sh $HOME
+
+ENV HOME /home/kasm-user
+WORKDIR $HOME
+RUN mkdir -p $HOME && chown -R 1000:0 $HOME
+
+USER 1000

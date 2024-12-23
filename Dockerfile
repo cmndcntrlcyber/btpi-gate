@@ -1,5 +1,7 @@
-FROM kasmweb/core-ubuntu-focal:1.16.1
+FROM docker:dind
 USER root
+
+CMD ["dockerd"]
 
 ENV HOME /home/kasm-default-profile
 ENV STARTUPDIR /dockerstartup
@@ -25,11 +27,18 @@ RUN mkdir /opt/btpi-gate/
 RUN echo = "127.0.0.1   {$PREFIX}-gate {$PREFIX}-gate-mgmt {$PREFIX}-gate-waf {$PREFIX}-gate-grr-g"
 
 #-------------------------------
-## Install portainer
-RUN mkdir portainer
-WORKDIR "/opt/portainer/"
+## Prep the Environment
+WORKDIR "/opt"
 RUN apk add bash tar curl
-RUN sudo curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh | sudo bash -
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh > /opt/btpi-gate/portainer/install_portainer.sh
+RUN sudo bash /opt/btpi-gate/portainer/install_portainer.sh
+#-------------------------------
+
+#-------------------------------
+## Install portainer
+WORKDIR "/opt"
+RUN apk add bash tar curl
+RUN curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh > /opt/btpi-gate/portainer/install_portainer.sh
 RUN sudo bash /opt/btpi-gate/portainer/install_portainer.sh
 #-------------------------------
 

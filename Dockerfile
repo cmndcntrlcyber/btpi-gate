@@ -21,7 +21,7 @@ RUN apk upgrade
 
 RUN apk add bash nano curl wget sudo
 RUN mkdir /opt/btpi-gate/
-RUN sudo echo = "127.0.0.1 {$PREFIX}-gate {$PREFIX}-gate-mgmt {$PREFIX}-gate-waf {$PREFIX}-gate-grr-g" >> /etc/hosts
+# RUN sudo echo = "127.0.0.1 {$PREFIX}-gate {$PREFIX}-gate-mgmt {$PREFIX}-gate-waf {$PREFIX}-gate-grr-g" >> /etc/hosts
 
 #-------------------------------
 ## Prep the Environment

@@ -27,17 +27,20 @@ RUN mkdir /opt/btpi-gate/
 ## Prep the Environment
 WORKDIR "/opt"
 RUN apk add bash tar curl apt
-RUN touch /opt/btpi-gate/fresh_btpi.sh
-RUN sudo curl https://raw.githubusercontent.com/cmndcntrlcyber/auto/refs/heads/main/fresh/fresh-btpi.sh >> /opt/btpi-gate/fresh_btpi.sh
-RUN sudo bash /opt/btpi-gate/fresh_btpi.sh
+#RUN touch /opt/btpi-gate/fresh_btpi.sh
+#RUN sudo curl https://raw.githubusercontent.com/cmndcntrlcyber/auto/refs/heads/main/fresh/fresh-btpi.sh >> /opt/btpi-gate/fresh_btpi.sh
+#RUN sudo bash /opt/btpi-gate/fresh_btpi.sh
 #-------------------------------
 
 #-------------------------------
 ## Install portainer
 WORKDIR "/opt"
 RUN apk add bash tar curl
-RUN sudo curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh > /opt/btpi-gate/portainer/install_portainer.sh
-RUN sudo bash /opt/btpi-gate/portainer/install_portainer.sh
+#RUN sudo curl https://raw.githubusercontent.com/cmndcntrlcyber/btpi-gate/refs/heads/main/portainer/install_portainer.sh > /opt/btpi-gate/portainer/install_portainer.sh
+#RUN sudo bash /opt/btpi-gate/portainer/install_portainer.sh
+
+RUN sudo docker volume create portainer_data
+RUN sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.21.0
 #-------------------------------
 
 #-------------------------------

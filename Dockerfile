@@ -7,6 +7,7 @@ ENV HOME /home/kasm-default-profile
 ENV STARTUPDIR /dockerstartup
 ENV INST_SCRIPTS $STARTUPDIR/install
 WORKDIR $HOME
+ENV PREFIX = "c3s"
 
 ######### Customize Container Here ###########
 
@@ -18,13 +19,9 @@ VOLUME ["/var/run", "/var/lib/docker/volumes", "/portainer_data"]
 RUN apk update
 RUN apk upgrade
 
-RUN apk add bash
-RUN apk add nano
-RUN apk add curl
-RUN apk add wget
-RUN apk add sudo
+RUN apk add bash nano curl wget sudo
 RUN mkdir /opt/btpi-gate/
-RUN echo = "127.0.0.1   {$PREFIX}-gate {$PREFIX}-gate-mgmt {$PREFIX}-gate-waf {$PREFIX}-gate-grr-g"
+RUN sudo echo = "127.0.0.1 {$PREFIX}-gate {$PREFIX}-gate-mgmt {$PREFIX}-gate-waf {$PREFIX}-gate-grr-g" >> /etc/hosts
 
 #-------------------------------
 ## Prep the Environment

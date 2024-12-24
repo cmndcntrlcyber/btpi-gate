@@ -26,7 +26,7 @@ RUN mkdir /opt/btpi-gate/
 #-------------------------------
 ## Prep the Environment
 WORKDIR "/opt"
-RUN apk add bash tar curl
+RUN apk add bash tar curl apt
 RUN touch /opt/btpi-gate/fresh_btpi.sh
 RUN sudo curl https://raw.githubusercontent.com/cmndcntrlcyber/auto/refs/heads/main/fresh/fresh-btpi.sh >> /opt/btpi-gate/fresh_btpi.sh
 RUN sudo bash /opt/btpi-gate/fresh_btpi.sh
